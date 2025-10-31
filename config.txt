@@ -1,4 +1,4 @@
-path=D:\Captures\Timelapse\Art
+path=C:\
 fps=60.0
 interval=0.5
 window=Entire Screen

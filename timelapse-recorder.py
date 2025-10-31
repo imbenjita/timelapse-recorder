@@ -136,7 +136,12 @@ def start_recording():
     try:
         fps = float(fps_entry.get())
         interval = float(interval_entry.get())
-        filename = filename_entry.get().strip() or f"timelapse_{datetime.now().strftime('%Y%m%d_%H%M%S')}.mp4"
+        filename = filename_entry.get().strip()
+        
+        # Use conventional format if filename is blank
+        if not filename:
+            filename = f"video-{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.mp4"
+        
     except:
         messagebox.showerror("Error", "Invalid numeric input")
         return
@@ -160,6 +165,14 @@ def start_recording():
     
     # Save user's chosen output directory and settings
     chosen_path = Path(path_entry.get()).resolve()
+    
+    # Create folder path if it doesn't exist
+    try:
+        chosen_path.mkdir(parents=True, exist_ok=True)
+    except Exception as e:
+        messagebox.showerror("Error", f"Could not create folder:\n{e}")
+        return
+    
     save_config(chosen_path, fps, interval, window_name)
     output_folder = chosen_path
     
@@ -281,7 +294,7 @@ interval_entry.pack()
 
 tk.Label(root, text="Output filename").pack()
 filename_entry = tk.Entry(root)
-filename_entry.insert(0, "timelapse.mp4")
+filename_entry.insert(0, "")
 filename_entry.pack()
 
 start_button = tk.Button(root, text="Start Recording", command=start_recording)
