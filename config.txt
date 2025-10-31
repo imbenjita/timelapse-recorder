@@ -1,0 +1,4 @@
+path=D:\Captures\Timelapse\Art
+fps=60.0
+interval=0.5
+window=Entire Screen
